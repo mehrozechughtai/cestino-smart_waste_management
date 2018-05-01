@@ -41,6 +41,16 @@
     <!-- New theme -->
     <link href="{{ URL::asset('build/css/custom.min.css')}}" rel="stylesheet">
 
+     <link href="{{URL::asset('lib/font-awesome/css/font-awesome.css')}}" rel="stylesheet" />
+    <link href="{{URL::asset('lib/Ionicons/css/ionicons.css')}}" rel="stylesheet" />
+    <link href="{{URL::asset('lib/perfect-scrollbar/css/perfect-scrollbar.css')}}" rel="stylesheet" />
+    <link href="{{URL::asset('lib/rickshaw/rickshaw.min.css')}}" rel="stylesheet" />
+
+    <!-- magen-iot-admin CSS -->
+    <link rel="stylesheet" href="{{ URL::asset('css/magen-iot-admin.css')}}" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+
+
   <!--   <script src="{{ URL::asset('build/js/custom.min.js')}}"></script> -->
 
 </head>
@@ -50,24 +60,132 @@
 @extends('layouts.app')
 
 @section('content')
+  <script type="text/javascript">
+      
+       var garbage_value = 70;
+
+    </script>
+
+  
+
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawStuff);
+
+      function drawStuff() {
+        var data = new google.visualization.arrayToDataTable([
+          ['Opening Move', 'Percentage'],
+          ["Monday", 23],
+          ["Tuesday", 31],
+          ["Wednesday", 53],
+          ["Thursday", 79],
+          ['Friday', 10],
+          ["Saturday", 21],
+          ['Sunday', 39]
+        ]);
+
+        var options = {
+          title: 'Weekly Analysis',
+          width: 470,
+          legend: { position: 'none' },
+          chart: { title: 'Weekly' },
+          bars: 'horizontal', // Required for Material Bar Charts.
+          axes: {
+            x: {
+              0: { side: 'top', label: 'Percentage'} // Top x-axis.
+            }
+          },
+          bar: { groupWidth: "90%" }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+        chart.draw(data, options);
+      };
+    </script>
+                                      <!-- LINE CHART -->
+    <script type="text/javascript">
+      google.charts.load('current', {packages: ['corechart', 'line']});
+      google.charts.setOnLoadCallback(drawBasic);
+
+      function drawBasic() {
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'X');
+            data.addColumn('number', 'Trash %');
+
+
+
+            data.addRows(
+            
+              [
+              [1, 30],   [2, 50],  [3, 63],  [4, 87],  [5, 18],  [6, 29],
+              [7, 41],  [8, 67],  [9, 83],  [10, 21],  [11, 32], [12, 35],
+              [13, 50], [14, 80], [15, 18], [16, 34], [17, 48],
+              [18, 52], [19, 74], [20, 82], [21, 5], [22, 29], [23, 38],
+              [24, 58], [25, 70], [26, 81], [27, 91], [28, 4], [29, 25],
+              [47, 55]
+            ]
+            );
+
+            var options = {
+              hAxis: {
+                title: 'Monthly Analysis'
+              },
+              vAxis: {
+                title: 'Bin Filling Percentage'
+              }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+          }
+
+    </script>
+
+<script type="text/javascript">
+
+     
+
+        // var value = 100; //garbage fullfill value
+
+      window.onload = function getTrashValue1()
+      {
+      
+
+        var full_bin_src = '../img/trash_full.png';
+        var empty_bin_src = '../img/trash_empty.png';
+
+      
+        if(garbage_value > 30)
+          {
+            // alert(value);
+            //trash not empty
+            document.getElementById('trash_id').src = full_bin_src;
+
+          }
+          else{
+
+            //trash not empty
+            document.getElementById('trash_id').src = empty_bin_src;
+
+          }
+
+          document.getElementById('myProgress').value = garbage_value;
+
+      }
+
+
+
+    </script>
+
+
+
+
 <div class="container" style="size:23px">
     <div class="row justify-content-center">
-       <!--  <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div> -->
+      
 </div>
   
     <div class="container body">
@@ -158,7 +276,7 @@
           <!-- top tiles -->
           <div class="row tile_count">
             <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-trash"></i> Total Bins</span>
+              <span class="count_top"><i class="fa fa-trash"></i> Total Bins </span>
               <div class="count">250</div>
               <span class="count_bottom"><i class="green">4% </i> From last Week</span>
             </div>
@@ -181,10 +299,12 @@
           </div>
           <!-- /top tiles -->
 
+
+
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div>
-                    <button class="btn btn-success btn-lg" src="###">Add New Bin</button>
+                    <!-- <button class="btn btn-success btn-lg" src="###">Add New Bin</button> -->
 
                 </div>
 
@@ -192,6 +312,7 @@
               <div class="table-responsive">
                       <table class="table table-striped jambo_table bulk_action">
                         <thead>
+                            <tr><center>Last 5 Recent Values..</center></tr>
                           <tr class="headings">
                             <th>
                               <input type="checkbox" id="check-all" class="flat">
@@ -202,7 +323,7 @@
                            <!--  <th class="column-title">Company </th> -->
                             <th class="column-title">Status </th>
                             <th class="column-title">Percentage </th>
-                            <th class="column-title no-link last"><span class="nobr">Action</span>
+                            <!-- <th class="column-title no-link last"><span class="nobr">Action</span> -->
                             </th>
                             <th class="bulk-actions" colspan="7">
                               <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
@@ -227,9 +348,9 @@
                                 ( $sensor->v1 + $sensor->v2 + $sensor->v3 ) /3 
 
 
-                            }}</td>
+                            }}<!-- </td>
                             <td class=" last"><a href="/home/{{ $sensor->id }}">View</a>
-                            </td>
+                            </td> -->
                           </tr>
                           @endforeach
                           
@@ -245,72 +366,159 @@
                     </div>
                 </div>
 
+          
+            
+              <div class="kt-pagebody">
+
+                <div class="row row-sm">
+                  <div class="col-lg-8">
+                    <div class="row row-sm">
+                      <div class="col-lg-6">
+                        <div class="card">
+                          <div class="card-body pd-b-0">
+                            <img src="../img/sensor.png" width="33%" class="card-icon" />
+                            <h6 class="card-body-title tx-12 tx-spacing-2 mg-b-20">Ultrasonic sensors</h6>
+                            <h2 class="tx-roboto tx-inverse">4 <br> <small>Active Sensors</small></h2>
+                            <!-- <p class="tx-12"><span class="tx-success">2.5%</span> stability from yesterday</p> -->
+                          </div><!-- card-body -->
+                          <div id="rs1" class="ht-50 ht-sm-70 mg-r--1"></div>
+                        </div><!-- card -->
+                      </div><!-- col-6 -->
+                      <div class="col-lg-6">
+                        <div class="card">
+                          <div class="card-body pd-b-0">
+                            <img src="../img/location.png" width="60" class="card-icon" />
+                            <h6 class="card-body-title tx-12 tx-spacing-2 mg-b-20">Bin Location</h6>
+                            <h2 class="tx-roboto tx-inverse"><!-- {{ $location }} --> <br><small>Lat: {{$sensor->lat}} , Lng: {{$sensor->lng}}</small>
+                              <br>
+
+
+                            </h2>
+                           <!--  <p class="tx-12"><span class="tx-success">2.5%</span> change from yesterday</p> -->
+                          </div><!-- card-body -->
+                          <div id="rs2" class="ht-50 ht-sm-70 mg-r--1"></div>
+                        </div><!-- card -->
+                      </div><!-- col-6 -->
+                    </div><!-- row -->
+
+                   <div class="row row-sm">
+                      <div class="col-lg-6">
+                        <div class="card mg-t-20">
+                          <div class="card-body pd-b-0 ">
+                                    <img src="../img/senc.svg" width="60" class="card-icon" />
+                            <h6 class="card-body-title tx-12 tx-spacing-2 mg-b-20">Bin Position</h6>
+                            <h2 class="tx-lato tx-inverse">Stable  <small></small></h2>
+                          
+                          </div><!-- card-body -->
+                          <div id="rs3" class="ht-50 ht-sm-70 mg-r--1"></div>
+
+                        </div><!-- card -->
+
+                      </div><!-- col-6 -->
+                     
+                      <div class="col-lg-6">
+                        <div class="card mg-t-20">
+                          <div class="card-body pd-b-0 ">
+                                    <img src="../img/trash.png" width="60" class="card-icon" />
+                            <h6 class="card-body-title tx-12 tx-spacing-2 mg-b-20">Trash Empty <small>last update</small></h6>
+                            <h2 class="tx-lato tx-inverse">2018-07-16  <small></small></h2>
+                          <!--   <p class="tx-12"><span class="tx-success">2.5%</span> change from yesterday</p> -->
+                          </div><!-- card-body -->
+                          <div id="rs3" class="ht-50 ht-sm-70 mg-r--1"></div>
+
+                        </div><!-- card -->
+
+                      </div><!-- col-6 -->
+                      <div class="col-lg-6 mg-t-20">
+                          
+                      </div><!-- col-6 -->
+
+                    </div><!-- row -->
+
+                    <div class="card pd-20 pd-sm-40 mg-t-20">
+                      <h6 class="card-body-title">Projection Day</h6>
+                      <h6><small>Next Day to collect garbage of bin</small></h6>
+                    <h4>After Approx {{ round($nextPredictiveDay,1) }} Days</h4>
+
+
+
+                     
+                    </div>
+
+                    <div class="card pd-20 pd-sm-40 mg-t-20">
+                        <h6 class="card-body-title"> Optimum Route path for Bin Collection</h6><hr>
+                        <div style="width: 100%; height: 400px;">
+                            {!! Mapper::render() !!}
+                        </div>
+
+                    </div>
+
+                    <div class="card pd-20 pd-sm-40 mg-t-20">
+                      <h6 class="card-body-title">Hostogram Chart of Bin Analysis</h6>
+                      <!-- <p class="mg-b-20 mg-sm-b-30">A bar chart or bar graph is a chart with rectangular bars with lengths proportional to the values that they represent.</p>
+                      <canvas id="chartBar4" height="380"></canvas> -->
+                      <div id="top_x_div" style="width: 70%; height: 500px;"></div>
+                     
+                    </div>
+
+                    <div class="card pd-20 pd-sm-40 mg-t-20">
+                      <h6 class="card-body-title">Line Chart of Bin Analysis<small> Monthly</small></h6>
+                      <div id="chart_div"></div>
+
+                    </div>
+
+
+          
+
+                  </div><!-- col-8 -->
+                  <div class="col-lg-4">
+                    <div class="card pd-40 tx-center">
+                      <div class="d-flex justify-content-center mg-b-30">
+                        <!-- Code edit for Bin -->
+                        <img id="trash_id" src="../img/trash_empty.png" class="wd-200" alt="" height="200" />
+                      </div>
+
+                      <br>
+
+                        <center>
+                          <progress id="myProgress" value="0" max="100">
+                          </progress>
+                       </center>
+                        <script type="text/javascript">
+                                document.write({{   ($sense->v1 + $sense->v2 + $sense->v3)/3  }}+'%');
+                            </script><br>
+                      
+                        <br>
+                      <h6 class="tx-md-20 tx-inverse mg-b-20">TRASH ANALYSIS</h6>
+                      <a href="/home/{{ $sensor->id}}" class="btn btn-success btn-block" onclick="getTrashValue1();">Update</a>
+                    </div><!-- card -->
+
+                
+                    <div class="card card-body pd-20 mg-t-20">
+                      <h6 class="card-body-title tx-12 tx-spacing-1">Get Connected</h6>
+                      <p>Just select any of your available social account to get started.</p>
+                      <div class="tx-20">
+                        <a href="./index.html" class="tx-primary mg-r-5"><i class="fa fa-facebook"></i></a>
+                        <a href="./index.html" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
+                        <a href="./index.html" class="tx-danger mg-r-5"><i class="fa fa-google-plus"></i></a>
+                        <a href="./index.html" class="tx-danger mg-r-5"><i class="fa fa-pinterest"></i></a>
+                        <a href="./index.html" class="tx-inverse mg-r-5"><i class="fa fa-github"></i></a>
+                        <a href="./index.html" class="tx-pink mg-r-5"><i class="fa fa-instagram"></i></a>
+                      </div>
+                    </div><!-- card -->
+
+                  </div><!-- col-4 -->
+                </div><!-- row -->
+              </div>
+              <!-- kt-pagebody -->
+      
+
+
           </div>
           <br />
 
          
 
-<!-- 
-              <div class="row">
-
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <div class="x_panel">
-                    <div class="x_title">
-                      <h2>CESTINO'S Spreading Network <small> Across the World</small></h2>
-                      <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                       <!--  <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Settings 1</a>
-                            </li>
-                            <li><a href="#">Settings 2</a>
-                            </li>
-                          </ul>
-                        </li> -->
-                        <!-- <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li> ->
-                      </ul>
-                      <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                      <div class="dashboard-widget-content">
-                        <div class="col-md-4 hidden-small">
-                          <h2 class="line_30">125.7k Views from 60 countries</h2>
-
-                          <table class="countries_list">
-                            <tbody>
-                              <tr>
-                                <td>United States</td>
-                                <td class="fs15 fw700 text-right">33%</td>
-                              </tr>
-                              <tr>
-                                <td>France</td>
-                                <td class="fs15 fw700 text-right">27%</td>
-                              </tr>
-                              <tr>
-                                <td>Germany</td>
-                                <td class="fs15 fw700 text-right">16%</td>
-                              </tr>
-                              <tr>
-                                <td>Spain</td>
-                                <td class="fs15 fw700 text-right">11%</td>
-                              </tr>
-                              <tr>
-                                <td>Britain</td>
-                                <td class="fs15 fw700 text-right">10%</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12" style="height:230px;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div> -->
             
             </div>
           </div>
@@ -328,6 +536,6 @@
           <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
-  
+  @endsection
 
-@endsection
+ 

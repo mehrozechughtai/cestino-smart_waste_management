@@ -34,6 +34,11 @@ return [
             'driver' => 'apc',
         ],
 
+        "geocode" => [
+            'driver' => 'redis',
+            'connection' => 'geocode-cache',
+        ],
+
         'array' => [
             'driver' => 'array',
         ],

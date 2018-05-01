@@ -200,7 +200,11 @@
                   <div class="card-body pd-b-0">
                     <img src="../img/location.png" width="60" class="card-icon" />
                     <h6 class="card-body-title tx-12 tx-spacing-2 mg-b-20">Bin Location</h6>
-                    <h2 class="tx-roboto tx-inverse">{{$sensor->location}} <br><small>Lat: {{$sensor->lat}} , Lng: {{$sensor->lng}}</small></h2>
+                    <h2 class="tx-roboto tx-inverse">{{ $location }} <br><small>Lat: {{$sensor->lat}} , Lng: {{$sensor->lng}}</small>
+                      <br>
+
+
+                    </h2>
                    <!--  <p class="tx-12"><span class="tx-success">2.5%</span> change from yesterday</p> -->
                   </div><!-- card-body -->
                   <div id="rs2" class="ht-50 ht-sm-70 mg-r--1"></div>
@@ -245,7 +249,7 @@
             <div class="card pd-20 pd-sm-40 mg-t-20">
               <h6 class="card-body-title">Projection Day</h6>
               <h6><small>Next Day to collect garbage of bin</small></h6>
-
+            <h4>After Approx {{ round($nextPredictiveDay,1) }} Days</h4>
 
 
 
