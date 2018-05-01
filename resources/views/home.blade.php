@@ -60,126 +60,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <script type="text/javascript">
-      
-       var garbage_value = 70;
-
-    </script>
-
-  
-
-   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
-
-      function drawStuff() {
-        var data = new google.visualization.arrayToDataTable([
-          ['Opening Move', 'Percentage'],
-          ["Monday", 23],
-          ["Tuesday", 31],
-          ["Wednesday", 53],
-          ["Thursday", 79],
-          ['Friday', 10],
-          ["Saturday", 21],
-          ['Sunday', 39]
-        ]);
-
-        var options = {
-          title: 'Weekly Analysis',
-          width: 470,
-          legend: { position: 'none' },
-          chart: { title: 'Weekly' },
-          bars: 'horizontal', // Required for Material Bar Charts.
-          axes: {
-            x: {
-              0: { side: 'top', label: 'Percentage'} // Top x-axis.
-            }
-          },
-          bar: { groupWidth: "90%" }
-        };
-
-        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-        chart.draw(data, options);
-      };
-    </script>
-                                      <!-- LINE CHART -->
-    <script type="text/javascript">
-      google.charts.load('current', {packages: ['corechart', 'line']});
-      google.charts.setOnLoadCallback(drawBasic);
-
-      function drawBasic() {
-
-            var data = new google.visualization.DataTable();
-            data.addColumn('number', 'X');
-            data.addColumn('number', 'Trash %');
-
-
-
-            data.addRows(
-            
-              [
-              [1, 30],   [2, 50],  [3, 63],  [4, 87],  [5, 18],  [6, 29],
-              [7, 41],  [8, 67],  [9, 83],  [10, 21],  [11, 32], [12, 35],
-              [13, 50], [14, 80], [15, 18], [16, 34], [17, 48],
-              [18, 52], [19, 74], [20, 82], [21, 5], [22, 29], [23, 38],
-              [24, 58], [25, 70], [26, 81], [27, 91], [28, 4], [29, 25],
-              [47, 55]
-            ]
-            );
-
-            var options = {
-              hAxis: {
-                title: 'Monthly Analysis'
-              },
-              vAxis: {
-                title: 'Bin Filling Percentage'
-              }
-            };
-
-            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-
-            chart.draw(data, options);
-          }
-
-    </script>
-
-<script type="text/javascript">
-
-     
-
-        // var value = 100; //garbage fullfill value
-
-      window.onload = function getTrashValue1()
-      {
-      
-
-        var full_bin_src = '../img/trash_full.png';
-        var empty_bin_src = '../img/trash_empty.png';
-
-      
-        if(garbage_value > 30)
-          {
-            // alert(value);
-            //trash not empty
-            document.getElementById('trash_id').src = full_bin_src;
-
-          }
-          else{
-
-            //trash not empty
-            document.getElementById('trash_id').src = empty_bin_src;
-
-          }
-
-          document.getElementById('myProgress').value = garbage_value;
-
-      }
-
-
-
-    </script>
-
+  <!--  -->
 
 
 
@@ -389,7 +270,7 @@
                           <div class="card-body pd-b-0">
                             <img src="../img/location.png" width="60" class="card-icon" />
                             <h6 class="card-body-title tx-12 tx-spacing-2 mg-b-20">Bin Location</h6>
-                            <h2 class="tx-roboto tx-inverse"><!-- {{ $location }} --> <br><small>Lat: {{$sensor->lat}} , Lng: {{$sensor->lng}}</small>
+                            <h2 class="tx-roboto tx-inverse"><br><small>Lat: {{$sensor->lat}} , Lng: {{$sensor->lng}}</small>
                               <br>
 
 

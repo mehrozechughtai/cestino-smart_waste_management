@@ -29,7 +29,7 @@ class HomeController extends Controller
     {
 
         $sense = Sensor::latest('id')->first();
-        $location = Geocoder::reverse(43.882587,-103.454067)->get();
+        // $location = Geocoder::reverse(43.882587,-103.454067)->get();
         $samples = [[60], [61], [62], [63], [65]];
         $targets = [3.1, 3.6, 3.8, 4, 4.1];
 
@@ -56,9 +56,9 @@ class HomeController extends Controller
 
        Mapper::informationWindow($locationMap->getLatitude(), $locationMap->getLongitude(), 'Content', ['open' => true, 'maxWidth'=> 300, 'markers' => ['title' => 'My Location']]);
 
-        return view('home')->with('sensors',$sensors)->with('sense',$sense)->with('location',$location)->with('nextPredictiveDay',$nextPredictiveDay);
+        return view('home')->with('sensors',$sensors)->with('sense',$sense)->with('nextPredictiveDay',$nextPredictiveDay);
     }
-    
+
     public function showBinDetails($id)
     {
 
